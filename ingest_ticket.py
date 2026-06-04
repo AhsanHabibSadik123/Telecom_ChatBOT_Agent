@@ -32,7 +32,27 @@ def load_ticket_documents(ticket_dir):
         ))
     return docs
 
+def main():
+    print("Loading TICKET...")
+    documents = load_ticket_documents(TICKET_DIR)
+    print(f"Number of ticket documents loaded: {len(documents)}")
 
+    print("Downloading embedding model...")
+    embeddings = HuggingFaceEmbeddings(model_name=EMBED_MODEL)
+    print("Embedding model downloaded.")
+    print("Embedding ticket documents and storing in Chroma...")
+
+    vector_store = Chroma.from_documents(
+        documents= documents,
+        embedding=embeddings,
+        collection_name=COLLECTION,
+        persist_directory=CHROMA_DIR
+    )
+    print(f"Done! \n {vector_store._collection.count()} vectors stored in Chroma collection '{COLLECTION}'.")
+
+
+if __name__ == "__main__":
+    pass
 
 
 
