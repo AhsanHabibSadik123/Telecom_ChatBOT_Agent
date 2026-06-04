@@ -19,3 +19,23 @@ def load_faq_documents(faq_path):
         metadata={"source": "faq", "category": row['category'], "faq_id": row['id']}
     return docs
 
+def main():
+    print("Loading FAQ documents...")
+    documents = load_faq_documents(CSV_PATH)
+    print(f"Number of FAQ documents loaded: {len(documents)}")
+
+    print("Downloading embedding model...")
+    embeddings = HuggingFaceEmbeddings(model_name=EMBED_MODEL)
+    print("Embedding model downloaded.")
+    print("Embedding FAQ documents and storing in Chroma...")
+
+    vector_store = Chroma.from_documents(
+        documents= documents,
+        embedding=embeddings,
+        collection_name=COLLECTION,
+        persist_directory=CHROMA_DIR
+    )
+    print(f"Done! \n {vector_store._collection.count()} vectors stored in Chroma collection '{COLLECTION}'.")
+
+if __name__ == "__main__":
+    main()
