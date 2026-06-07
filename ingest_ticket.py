@@ -7,7 +7,7 @@ import sqlite3
 CHROMA_DIR = "chroma_store"
 COLLECTION = "tickets"
 EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-TICKET_DIR = "E:\\Agentic_AI\\Telecom_ChatBOT\\Resources\\tickets.db"
+TICKET_DIR = "/media/sadik/Data/my notebook/Gen AI Project/Telecom_ChatBOT_Agent/Resources/tickets.db"
 
 def load_ticket_documents(ticket_dir):
     conn = sqlite3.connect(TICKET_DIR)
@@ -52,7 +52,7 @@ def main():
 
 
 if __name__ == "__main__":
-    pass
+    main()
 
 
 
